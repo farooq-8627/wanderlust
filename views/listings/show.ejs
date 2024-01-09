@@ -1,0 +1,47 @@
+<% layout("/layouts/boilerplate")%>
+<script>
+	let mapToken = "<%= process.env.MAP_TOKEN %>";
+	let listing = <%- JSON.stringify(listing) %>;
+</script>
+<div class="row">
+	<div class="col-8 offset-2 show-head">
+		<h3 class="show-h3 mb-3 mt-3"><%= listing.title%></h3>
+		<i class="mb-3 mt-3"
+			><b>Owned By:</b>&nbsp;&nbsp;<%=listing.owner.username%></i
+		>
+	</div>
+	<div class="card col-6 offset-3 show-card">
+		<img
+			class="card-img-top show-img"
+			src="<%=listing.image.url%>"
+			alt="listing_image"
+		/>
+		<div class="card-body">
+			<p class="card-text m-2">
+				<br />
+				<i><%= listing.description%></i> <br /><br />
+				<b>Price:</b>&nbsp;&nbsp; &#8377; <%=
+				listing.price.toLocaleString("en-IN")%> / night <br />
+				<b>Location:</b>&nbsp;&nbsp;<%= listing.location%> <br />
+				<b>Country:</b>&nbsp;&nbsp;<%= listing.country%> <br />
+			</p>
+		</div>
+	</div>
+	<% if(currUser && listing.owner._id.equals(currUser._id)) { %>
+	<div class="btns col-6 offset-3 mb-5">
+		<a href="/listing/<%=listing._id%>/edit" class="btn btn-dark show-edit"
+			>Edit</a
+		><br />
+		<form action="/listing/<%=listing._id%>?_method=DELETE" method="POST">
+			<button class="btn btn-dark">Delete</button>
+		</form>
+	</div>
+	<% } %> <%- include("../includes/reviews.ejs")%>
+
+	<div class="col-8 offset-2 mb-5">
+		<h4>Where you'll be</h4>
+		<div id="map" class="show-map"></div>
+	</div>
+</div>
+
+<script src="/js/map.js"></script>

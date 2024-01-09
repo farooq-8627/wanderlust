@@ -1,0 +1,25 @@
+<% layout("/layouts/boilerplate")%>
+<body>
+	<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+		<%for(let listing of allListings){%>
+		<a class="card-link" href="/listing/<%=listing._id%>">
+			<div class="card index-card col">
+				<img
+					class="card-img-top mb-2"
+					src="<%=listing.image.url%>"
+					alt="listing_image"
+					style="height: 18rem"
+				/>
+				<div class="card-img-overlay"></div>
+				<div class="card-body">
+					<p class="card-text index-card-text">
+						<b><%= listing.title%></b><br />
+						&#8377; <%= listing.price.toLocaleString("en-IN")%> / night
+						<i class="tax-info">&nbsp;&nbsp;&nbsp;+18% GST</i>
+					</p>
+				</div>
+			</div>
+		</a>
+		<%}%>
+	</div>
+</body>
